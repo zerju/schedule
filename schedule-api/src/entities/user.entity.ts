@@ -1,4 +1,4 @@
-import { UserRoles, UserStatus } from 'src/modules/users/dto/user.dto';
+import { UserRoles, UserStatus } from '../modules/users/dto/user.dto';
 import {
   Column,
   CreateDateColumn,

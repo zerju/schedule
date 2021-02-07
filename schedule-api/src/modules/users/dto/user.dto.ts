@@ -6,7 +6,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { IVersionCheckEntity } from 'src/utils/crud-helper';
+import { IVersionCheckEntity } from '../../../utils/crud-helper';
 
 export enum UserRoles {
   USER = 'USER',

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { EntitiesModule } from 'src/entities/entities.module';
+import { EntitiesModule } from '../../entities/entities.module';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
@@ -7,5 +7,6 @@ import { UsersService } from './users.service';
   imports: [EntitiesModule],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}

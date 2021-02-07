@@ -1,6 +1,6 @@
-import { UsersService } from 'src/modules/users/users.service';
+import { UsersService } from '../../modules/users/users.service';
 import * as bcrypt from 'bcrypt';
-import UserDto from 'src/modules/users/dto/user.dto';
+import UserDto from '../../modules/users/dto/user.dto';
 import { PostgresErrorCode } from '../../common/database/postgresErrorCodes.enum';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { AppConfigService } from '../app-config/app-config.service';

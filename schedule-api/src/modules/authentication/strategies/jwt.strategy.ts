@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { TokenPayload } from '../interfaces/tokenPayload.interface';
 import { UsersService } from '../../users/users.service';
-import { AppConfigService } from 'src/modules/app-config/app-config.service';
+import { AppConfigService } from '../../../modules/app-config/app-config.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
