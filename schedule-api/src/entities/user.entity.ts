@@ -3,10 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import Event from './event.entity';
 
 @Entity()
 export class User {
@@ -23,6 +26,7 @@ export class User {
   lastName: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column()
@@ -42,4 +46,9 @@ export class User {
 
   @VersionColumn()
   ocVersion?: number;
+
+  @OneToMany(() => Event, (event: Event) => event.createdBy)
+  events: Event;
 }
+
+export default User;

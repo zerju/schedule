@@ -15,7 +15,7 @@ import UserDto from '../users/dto/user.dto';
 import { Response } from 'express';
 import JwtAuthenticationGuard from './guards/jwtAuthentication.guard';
 
-@Controller('authentication')
+@Controller('auth')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 
@@ -27,12 +27,11 @@ export class AuthenticationController {
   @HttpCode(200)
   @UseGuards(LocalAuthenticationGuard)
   @Post('login')
-  async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
+  async logIn(@Req() request: RequestWithUser) {
     const { user } = request;
     const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
-    response.setHeader('Set-Cookie', cookie);
-    delete user.password;
-    return response.send(user);
+    request.res.setHeader('Set-Cookie', cookie);
+    return user;
   }
 
   @UseGuards(JwtAuthenticationGuard)
@@ -49,7 +48,6 @@ export class AuthenticationController {
   @Get()
   authenticate(@Req() request: RequestWithUser) {
     const user = request.user;
-    delete user.password;
     return user;
   }
 }

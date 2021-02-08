@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDateString,
+  IsEmail,
   IsEnum,
   IsNumber,
   IsOptional,
   IsString,
+  MinLength,
 } from 'class-validator';
 import { IVersionCheckEntity } from '../../../utils/crud-helper';
 
@@ -28,6 +30,7 @@ export default class UserDto implements IVersionCheckEntity {
 
   @IsString()
   @ApiProperty()
+  @IsEmail()
   email?: string;
 
   @IsString()
@@ -40,18 +43,22 @@ export default class UserDto implements IVersionCheckEntity {
 
   @IsString()
   @ApiProperty()
+  @MinLength(8)
   password?: string;
 
   @IsEnum(UserRoles)
   @ApiProperty()
+  @IsOptional()
   role?: UserRoles;
 
   @IsEnum(UserStatus)
   @ApiProperty()
+  @IsOptional()
   status?: UserStatus;
 
   @IsString()
   @ApiProperty()
+  @IsOptional()
   phoneNumber?: string;
 
   @IsNumber()
@@ -60,8 +67,10 @@ export default class UserDto implements IVersionCheckEntity {
   ocVersion?: number;
 
   @IsDateString()
-  createdAt: string;
+  @IsOptional()
+  createdAt?: string;
 
   @IsDateString()
-  updatedAt: string;
+  @IsOptional()
+  updatedAt?: string;
 }

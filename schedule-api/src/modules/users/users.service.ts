@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import UserDto from './dto/user.dto';
+import UserDto, { UserRoles, UserStatus } from './dto/user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../entities/user.entity';
 import { Repository } from 'typeorm';
@@ -7,9 +7,6 @@ import { CrudHelper } from '../../utils/crud-helper';
 
 @Injectable()
 export class UsersService {
-  private lastUserId = 0;
-  private users: User[] = [];
-
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
@@ -31,7 +28,9 @@ export class UsersService {
   }
 
   async getById(id: number): Promise<UserDto> {
-    const user = await this.usersRepository.findOne(id);
+    const user = await this.usersRepository.findOne(id, {
+      relations: ['events'],
+    });
     if (user) {
       return user;
     }
@@ -41,9 +40,10 @@ export class UsersService {
   async update(id: number, userDto: UserDto): Promise<UserDto> {
     const updateUser = this.usersRepository.create(userDto);
     await this.usersRepository.update(id, updateUser);
-    const updatedUser = await this.usersRepository.findOne(id);
+    const updatedUser = await this.usersRepository.findOne(id, {
+      relations: ['events'],
+    });
     if (updatedUser) {
-      delete updatedUser.password;
       return updatedUser;
     }
     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -51,9 +51,11 @@ export class UsersService {
 
   async create(userDto: UserDto): Promise<UserDto> {
     CrudHelper.idShouldBeUndefined(userDto.id);
+    userDto.status = UserStatus.PENDING;
+    /**@todo add role on the client side request and check that only admin can create admin roles */
+    userDto.role = UserRoles.ADMIN;
     const newUser = await this.usersRepository.create(userDto);
     await this.usersRepository.save(newUser);
-    delete newUser.password;
     return newUser;
   }
 

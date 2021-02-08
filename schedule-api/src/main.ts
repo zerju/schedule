@@ -1,12 +1,17 @@
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { Logger } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Logger,
+  ValidationPipe,
+} from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 
 import { usage } from './utils/usage';
 import { AppModule } from './app.module';
 import { AppConfigService } from './modules/app-config/app-config.service';
+import { ExcludeNullInterceptor } from './common/interceptors/exclude-null.interceptor';
 
 async function bootstrap() {
   const logger = new Logger();
@@ -17,6 +22,10 @@ async function bootstrap() {
   app.use(cookieParser());
   const configService = app.get(AppConfigService);
   const serverConfig = configService.getServerConfig();
+
+  app.useGlobalInterceptors(new ExcludeNullInterceptor());
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   app.enableCors({
     maxAge: 3600,

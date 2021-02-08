@@ -7,7 +7,7 @@ export class CrudHelper {
   ) {
     if (entity.ocVersion !== entityDto.ocVersion) {
       throw new ConflictException(
-        'Optimistic concurrency error. Somebody updatet item before you.',
+        'Optimistic concurrency error. Somebody updated item before you.',
       );
     }
   }
