@@ -12,7 +12,7 @@ import { Exclude } from 'class-transformer';
 import Event from './event.entity';
 
 @Entity()
-export class User {
+class User {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -8,7 +8,7 @@ import {
   VersionColumn,
 } from 'typeorm';
 import EventLocation from './event-location.entity';
-import { User } from './user.entity';
+import User from './user.entity';
 
 @Entity()
 class Event {

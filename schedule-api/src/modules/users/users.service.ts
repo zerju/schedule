@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import UserDto, { UserRoles, UserStatus } from './dto/user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../../entities/user.entity';
+import User from '../../entities/user.entity';
 import { Repository } from 'typeorm';
 import { CrudHelper } from '../../utils/crud-helper';
 

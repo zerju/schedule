@@ -11,7 +11,7 @@ import {
 import { UsersService } from './users.service';
 import UserDto from './dto/user.dto';
 import JwtAuthenticationGuard from '../authentication/guards/jwtAuthentication.guard';
-import { FindOneParams } from 'src/utils/find-one-params';
+import { FindOneParams } from '../../utils/find-one-params';
 
 @Controller('users')
 @SerializeOptions({
