@@ -33,6 +33,12 @@ class Schedule {
 
   @VersionColumn()
   ocVersion?: number;
+
+  @Column('timestamp with time zone')
+  validFrom: Date;
+
+  @Column('timestamp with time zone')
+  validThrough: Date;
 }
 
 export default Schedule;

@@ -68,9 +68,23 @@ export default class UserDto implements IVersionCheckEntity {
 
   @IsDateString()
   @IsOptional()
+  @ApiProperty()
   createdAt?: string;
 
   @IsDateString()
+  @ApiProperty()
   @IsOptional()
   updatedAt?: string;
+
+  @IsString()
+  @IsOptional()
+  currentHashedRefreshToken?: string;
+
+  @IsString()
+  @IsOptional()
+  activationToken?: string;
+
+  @IsNumber()
+  @IsOptional()
+  activationTokenExpiration?: Date;
 }

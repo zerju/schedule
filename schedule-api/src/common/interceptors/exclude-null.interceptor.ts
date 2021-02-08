@@ -11,6 +11,9 @@ import { map } from 'rxjs/operators';
 export class ExcludeNullInterceptor implements NestInterceptor {
   /**@todo make this recursive for all objects */
   removeNullValues(obj: any) {
+    if (!obj) {
+      return obj;
+    }
     const newObj: any = {};
     Object.entries(obj).forEach(([k, v]) => {
       if (v != null) {

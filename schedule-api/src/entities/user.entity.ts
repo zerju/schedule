@@ -11,7 +11,7 @@ import {
 import { Exclude } from 'class-transformer';
 import Event from './event.entity';
 
-@Entity()
+@Entity({ name: 'registered_user' })
 class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -49,6 +49,16 @@ class User {
 
   @OneToMany(() => Event, (event: Event) => event.createdBy)
   events: Event;
+
+  @Column({ nullable: true })
+  @Exclude()
+  currentHashedRefreshToken?: string;
+
+  @Column({ nullable: true })
+  activationToken?: string;
+
+  @Column('timestamp with time zone', { nullable: true })
+  activationTokenExpiration?: Date;
 }
 
 export default User;
