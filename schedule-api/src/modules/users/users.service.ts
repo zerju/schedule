@@ -58,11 +58,19 @@ export class UsersService {
         activationTokenExpiration: MoreThanOrEqual(new Date()),
       },
     });
-    console.log(new Date(), user?.activationTokenExpiration);
     if (!user) {
       throw new HttpException(
         'Wrong activation token or token has expired',
         HttpStatus.BAD_REQUEST,
+      );
+    } else {
+      await this.usersRepository.update(
+        { id: user.id },
+        {
+          activationToken: null,
+          activationTokenExpiration: null,
+          status: UserStatus.ACTIVATED,
+        },
       );
     }
   }

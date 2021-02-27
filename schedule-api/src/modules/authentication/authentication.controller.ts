@@ -75,11 +75,10 @@ export class AuthenticationController {
   @UseGuards(JwtRefreshGuard)
   @Get('refresh')
   async refresh(@Req() request: RequestWithUser) {
-    await this.usersService.removeRefreshToken(request.user.id);
-    request.res.setHeader(
-      'Set-Cookie',
-      this.authenticationService.getCookiesForLogOut(),
+    const accessTokenCookie = this.authenticationService.getCookieWithJwtToken(
+      request.user.id,
     );
+    request.res.setHeader('Set-Cookie', accessTokenCookie);
     return request.user;
   }
 }
